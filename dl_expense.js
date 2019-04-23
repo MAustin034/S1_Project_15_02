@@ -30,7 +30,13 @@
       Formats the value, "val", as U.S. currency.
       
 */
-
+window.addEventListener('load', function () {
+      var changingCells = document.querySelectorAll('table#travelExp input.sum');
+      for (var i = 0; i < changingCells.length; i++) {
+            changingCells[i].addEventListener("change", calcExp);
+      }
+      document.getElementById("submitButton").addEventListener('click', validateSummary);
+})
 
 
 
