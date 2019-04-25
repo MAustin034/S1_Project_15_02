@@ -33,19 +33,55 @@
 window.addEventListener('load', function () {
       var changingCells = document.querySelectorAll('table#travelExp input.sum');
       for (var i = 0; i < changingCells.length; i++) {
-            changingCells[i].addEventListener("change", calcExp);
+            changingCells[i].addEventListener('change', calcExp);
       }
-      document.getElementById("submitButton").addEventListener('click', validateSummary);
-})
+      document.getElementById('submitButton').onclick = function () {
+            validateSummary();
+      }
+});
+
+function validateSummary() {
+      var summary = document.getElementById('summary');
+      if (summary.validity.valueMissing) {
+            summary.setCustomValidity("You must include a summary of the trip in your report");
+      } else {
+            summary.setCustomValidity("");
+      }
+}
+
+function calcClass(sumClass) {
+      var sumFields = document.getElementsByClassName(sumClass);
+      var sumTotal = 0;
+
+      for (var i = 0; i < sumFields.length; i++) {
+            var itemValue = parseFloat(sumFields[i].value);
+            if (isNaN(itemValue) === false) {
+                  sumTotal += itemValue;
+            }
+      }
+      return sumTotal;
+}
+
+function calcExp() {
+      var expTable = document.querySelectorAll('table#travelExp tbody tr');
+
+
+      for (var i = 0; i < expTable.length; i++) {
+            document.getElementById(`subtotal${i}`).value = formatNumber(calcClass(`date${i}`), 2);
+      }
+
+      document.getElementById('transTotal').value = formatNumber(calcClass("trans"), 2);
+      document.getElementById('lodgeTotal').value = formatNumber(calcClass("lodge"), 2);
+      document.getElementById('mealTotal').value = formatNumber(calcClass("meal"), 2);
+      document.getElementById('otherTotal').value = formatNumber(calcClass("other"), 2);
+
+      document.getElementById('expTotal') = formatUSCurrency(calcClass('sum'));
+}
 
 
 
 
-
-
-
-
-
+// * Given Fucntions * \\
 function formatNumber(val, decimals) {
       return val.toLocaleString(undefined, {
             minimumFractionDigits: decimals,
