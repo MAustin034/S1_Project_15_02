@@ -75,7 +75,7 @@ function calcExp() {
       document.getElementById('mealTotal').value = formatNumber(calcClass("meal"), 2);
       document.getElementById('otherTotal').value = formatNumber(calcClass("other"), 2);
 
-      document.getElementById('expTotal') = formatUSCurrency(calcClass('sum'));
+      document.getElementById('expTotal').value = formatUSCurrency(calcClass("sum"), 2);
 }
 
 
